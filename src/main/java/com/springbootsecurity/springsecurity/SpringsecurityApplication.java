@@ -8,10 +8,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 public class SpringsecurityApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringsecurityApplication.class, args);
-	}
-
 
 	/*
 	The default password is printed to the console with a username of 'user
@@ -19,9 +15,10 @@ public class SpringsecurityApplication {
 	You can override the default username and password in the application.properties file with:
 	spring.security.user.name=userName
 	spring.security.user.password=userPassword
+	*/
 
-	AuthenticationManager
-	- Authentication Manager is what does the authentication and it is our job to configure it
-	through a builder class called AuthenticationManagerBuilder
-	 */
+	public static void main(String[] args) {
+		SpringApplication.run(SpringsecurityApplication.class, args);
+	}
+
 }
