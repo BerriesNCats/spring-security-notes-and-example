@@ -2,6 +2,7 @@ package com.springbootsecurity.springsecurity;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -35,15 +36,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password("password")
                 .roles("USER")
                 .and()
-                .withUser("second user")
+                .withUser("admin name")
                 .password("password")
-                .roles("USER");
+                .roles("ADMIN");
     }
+
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         // Note this password encoder doesn't actually do any encoding
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    /*
+    HttpSecurity
+    - Allows us to create authorization configuration to create roles for different users
+    - uses wildcards to match paths with the roles we've assigned to the users
+    - form login is the default configuartion
+    - permit all allows anyone to access that endpoint
+     */
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/").permitAll()
+                .and().formLogin();
+
     }
 
 
